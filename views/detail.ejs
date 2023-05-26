@@ -1,0 +1,30 @@
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Detail Contact</h2>
+            <% if (!contact) { %>
+                <div class="alert alert-danger fw-bold" role="alert">
+                    Data contact tidak ada. <br> <a href="/contact" class="alert-link fw-normal">&laquo; kembali ke daftar contact</a>.
+                </div>
+            <% } else { %>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title"><%= contact.nama %> </h5>
+                  <h6 class="card-subtitle mb-2 text-muted"><%= contact.nohp %> </h6>
+                  <p class="card-text"><%= contact.email %> </p>
+                  <a href="/contact/edit/<%= contact.nama %>" class="btn btn-info badge">ubah</a>
+                  <!-- <a href="/contact/delete/<%= contact.nama %>" class="btn btn-danger badge" onclick="return confirm('yakin?');">hapus</a> -->
+                  <form action="/contact?_method=DELETE" method="POST" class="d-inline">
+                    <!-- harus d kasih method, kalo ga d kasih method default nya get, kalo get data nya terlihat di url -->
+                    <input type="hidden" name="nama" value="<%= contact.nama %>">
+                    <!--begitu tombol d click, data nya terkirim, klo yg ini pakai input hidden bkn pakai params  -->
+                    <button type="submit" class="btn btn-danger badge" onclick="return confirm('yakin ingin menghapus contact ini?')">hapus</button>
+                  </form>
+                  <!-- tombol di method delete pakai nya form button, bkn tag a lagi -->
+                  <a href="/contact" class="card-link d-block mt-3">&laquo; Kembali ke daftar contact</a>
+                </div>
+            </div>
+            <% } %> 
+        </div>
+    </div>
+</div>
