@@ -3,14 +3,12 @@ const expressLayouts = require('express-ejs-layouts');
 
 const { body, validationResult, check } = require('express-validator');
 const methodOverride = require('method-override');
-// agar bisa menggunakan method delete dan put
 
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 
 require('./utils/db');
-// hanya membutuhkan koneksi nya saja
 const Contact = require('./model/contact');
 
 const app = express();
@@ -79,9 +77,7 @@ app.post(
     check('nohp', 'No HP tidak valid!').isMobilePhone('id-ID'),
 ], (req, res) => {
     const errors = validationResult(req);
-    // klo email dll tidak sesuai format, errors akan ada isinya
     if (!errors.isEmpty()) {
-        // return res.status(400).json({ errors: errors.array() });
         res.render('add-contact', {
             title: 'Form Tambah Data Contact',
             layout: 'layouts/main-layout',
@@ -89,7 +85,6 @@ app.post(
         });
     } else {
         Contact.insertMany(req.body, (error, result) => {
-            // kirimkan flash message
             req.flash('msg', 'Data contact berhasil ditambahkan!');
             res.redirect('/contact');
         })
@@ -127,15 +122,12 @@ app.put(
     check('nohp', 'No HP tidak valid!').isMobilePhone('id-ID'),
 ], (req, res) => {
     const errors = validationResult(req);
-    // klo email dll tidak sesuai format, errors akan ada isinya
     if (!errors.isEmpty()) {
-        // return res.status(400).json({ errors: errors.array() });
         res.render('edit-contact', {
             title: 'Form Ubah Data Contact',
             layout: 'layouts/main-layout',
             errors: errors.array(),
             contact: req.body,
-            // contact u ketika error, ttp ada tulisan data d dlm form nya
         });
     } else {
         Contact.updateOne(

@@ -4,7 +4,6 @@
             <h2>Form Ubah Data Contact</h2>
 
             <% if (typeof errors != 'undefined') { %>
-              <!-- kalo undefined brrti tdk ada error, yg tertangkap -->
             <div class="alert alert-danger" role="alert">
                 <ul>
                     <% errors.forEach(error => { %>
@@ -17,7 +16,6 @@
             <form method="post" action="/contact?_method=PUT">
                 <input type="hidden" name="_id" value="<%= contact._id %>">
                 <input type="hidden" name="oldNama" value="<%= contact.oldNama || contact.nama %>">
-                <!-- value di buat seperti itu, agar ketika masukkan nama yg sudah ada terjadi error, nah saat error di halaman itu jg tekan ubah lg malah merubah namanya -->
                 <div class="mb-3">
                   <label for="nama" class="form-label">Nama</label>
                   <input type="text" class="form-control" id="nama" name="nama" required value="<%= contact.nama %>">

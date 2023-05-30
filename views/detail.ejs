@@ -13,14 +13,10 @@
                   <h6 class="card-subtitle mb-2 text-muted"><%= contact.nohp %> </h6>
                   <p class="card-text"><%= contact.email %> </p>
                   <a href="/contact/edit/<%= contact.nama %>" class="btn btn-info badge">ubah</a>
-                  <!-- <a href="/contact/delete/<%= contact.nama %>" class="btn btn-danger badge" onclick="return confirm('yakin?');">hapus</a> -->
                   <form action="/contact?_method=DELETE" method="POST" class="d-inline">
-                    <!-- harus d kasih method, kalo ga d kasih method default nya get, kalo get data nya terlihat di url -->
                     <input type="hidden" name="nama" value="<%= contact.nama %>">
-                    <!--begitu tombol d click, data nya terkirim, klo yg ini pakai input hidden bkn pakai params  -->
                     <button type="submit" class="btn btn-danger badge" onclick="return confirm('yakin ingin menghapus contact ini?')">hapus</button>
                   </form>
-                  <!-- tombol di method delete pakai nya form button, bkn tag a lagi -->
                   <a href="/contact" class="card-link d-block mt-3">&laquo; Kembali ke daftar contact</a>
                 </div>
             </div>
