@@ -39,7 +39,7 @@ app.use(flash());
 app.get('/', (req, res) => {
 
     res.render('index', { 
-        title: 'Halaman Home',
+        title: 'Home Page',
         layout: 'layouts/main-layout',
     });
 });
@@ -48,7 +48,7 @@ app.get('/', (req, res) => {
 app.get('/contact', async (req, res) => {
     const contacts = await Contact.find();
     res.render('contact', { 
-        title: 'Halaman Contact',
+        title: 'Contact Page',
         layout: 'layouts/main-layout',
         contacts,
         msg: req.flash('msg'),
@@ -58,7 +58,7 @@ app.get('/contact', async (req, res) => {
 // halaman form tambah data contact
 app.get('/contact/add', (req, res) => {
     res.render('add-contact', {
-        title: 'Form Tambah Data Contact',
+        title: 'Add Contact Data Form',
         layout: 'layouts/main-layout',
     });
 });
@@ -69,23 +69,23 @@ app.post(
     body('nama').custom( async (value) => {
         const duplikat = await Contact.findOne({ nama: value });
         if (duplikat) {
-            throw new Error('Nama contact sudah digunakan!');
+            throw new Error(`Contact's name already used!`);
         }
         return true;
     }),
-    check('email', 'Email tidak valid!').isEmail(),
-    check('nohp', 'No HP tidak valid!').isMobilePhone('id-ID'),
+    check('email', 'Email is not valid!').isEmail(),
+    check('nohp', 'Phone number is not valid!').isMobilePhone('id-ID'),
 ], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         res.render('add-contact', {
-            title: 'Form Tambah Data Contact',
+            title: 'Add Contact Data Form',
             layout: 'layouts/main-layout',
             errors: errors.array(),
         });
     } else {
         Contact.insertMany(req.body, (error, result) => {
-            req.flash('msg', 'Data contact berhasil ditambahkan!');
+            req.flash('msg', 'Contact data succeed to added!');
             res.redirect('/contact');
         })
     }
@@ -93,7 +93,7 @@ app.post(
 
 app.delete('/contact', (req, res) => {
     Contact.deleteOne({ nama: req.body.nama }).then((result) => {
-        req.flash('msg', 'Data contact berhasil dihapus!');
+        req.flash('msg', 'Contact data succeed to deleted!');
         res.redirect('/contact');
     });
 });
@@ -102,7 +102,7 @@ app.delete('/contact', (req, res) => {
 app.get('/contact/edit/:nama', async (req, res) => {
     const contact = await Contact.findOne({ nama: req.params.nama });
     res.render('edit-contact', {
-        title: 'Form Ubah Data Contact',
+        title: 'Change Contact Data Form',
         layout: 'layouts/main-layout',
         contact,
     });
@@ -114,17 +114,17 @@ app.put(
     body('nama').custom(async (value, { req }) => {
         const duplikat = await Contact.findOne({ nama: value });
         if (value !== req.body.oldNama && duplikat) {
-            throw new Error('Nama contact sudah digunakan!');
+            throw new Error(`Contact's name already used!`);
         }
         return true;
     }),
-    check('email', 'Email tidak valid!').isEmail(),
-    check('nohp', 'No HP tidak valid!').isMobilePhone('id-ID'),
+    check('email', 'Email is not valid!').isEmail(),
+    check('nohp', 'Phone number is not valid!').isMobilePhone('id-ID'),
 ], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         res.render('edit-contact', {
-            title: 'Form Ubah Data Contact',
+            title: 'Change Contact Data Form',
             layout: 'layouts/main-layout',
             errors: errors.array(),
             contact: req.body,
@@ -141,7 +141,7 @@ app.put(
             }
         ).then((result) => {
             // kirimkan flash message
-            req.flash('msg', 'Data contact berhasil diubah!');
+            req.flash('msg', 'Contact data succeed to changed!');
             res.redirect('/contact');
         });
     }
@@ -153,7 +153,7 @@ app.get('/contact/:nama', async (req, res) => {
     
 
     res.render('detail', { 
-        title: 'Halaman Detail Contact',
+        title: 'Contact Detail Page',
         layout: 'layouts/main-layout',
         contact,
     });

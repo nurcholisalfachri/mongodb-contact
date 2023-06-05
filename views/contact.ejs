@@ -1,9 +1,9 @@
 <div class="container mt-3">
     <div class="row">
         <div class="col-md-8">
-            <h2>Daftar Contact</h2>
+            <h2>Contact List</h2>
 
-            <a href="/contact/add" class="btn btn-primary mb-2">Tambah Data Contact</a>
+            <a href="/contact/add" class="btn btn-primary mb-2">Add Contact</a>
 
             <% if (msg.length !== 0) { %>
               <div class="alert alert-success" role="alert"><%= msg %> </div>
@@ -13,9 +13,9 @@
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">No HP</th>
-                    <th scope="col">Aksi</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -23,7 +23,7 @@
                     <tr>
                       <td colspan="4">
                         <div class="alert alert-danger fw-bold" role="alert">
-                          Data contact masih kosong.
+                          Contact data is empty.
                         </div>
                       </td>
                     </tr>
